@@ -10,7 +10,6 @@ import {tableLocalization} from "settings/tableLocalization";
 const Col = withStyle(Column, () => ({
     '@media only screen and (max-width: 767px)': {
         marginBottom: '20px',
-
         ':last-child': {
             marginBottom: 0,
         },

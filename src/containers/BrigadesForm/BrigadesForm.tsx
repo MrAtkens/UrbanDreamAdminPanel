@@ -20,7 +20,7 @@ import brigadeStore from 'stores/brigadesStore'
 
 type Props = any;
 
-const ModeratorsForm: React.FC<Props> = observer((props) => {
+const BrigadeAddForm: React.FC<Props> = observer((props) => {
   const dispatch = useDrawerDispatch();
   const closeDrawer = useCallback(() => dispatch({ type: 'CLOSE_DRAWER' }), [
     dispatch,
@@ -178,7 +178,7 @@ const ModeratorsForm: React.FC<Props> = observer((props) => {
                   },
                 }}
             >
-              Добавить Модератора
+              Добавить бригаду
             </Button>
           </ButtonGroup>
         </Form>
@@ -186,4 +186,4 @@ const ModeratorsForm: React.FC<Props> = observer((props) => {
   );
 });
 
-export default ModeratorsForm;
+export default BrigadeAddForm;

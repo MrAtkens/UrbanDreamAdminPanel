@@ -178,7 +178,7 @@ const ModeratorsForm: React.FC<Props> = observer((props) => {
                   },
                 }}
             >
-              Добавить Модератора
+              Редактировать бригаду
             </Button>
           </ButtonGroup>
         </Form>

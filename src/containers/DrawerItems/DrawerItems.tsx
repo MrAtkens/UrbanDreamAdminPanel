@@ -8,8 +8,9 @@ import { useDrawerState, useDrawerDispatch } from 'context/DrawerContext';
 import ModeratorsForm from '../ModeratorsForm/ModeratorsForm';
 import ModeratorsUpdateForm from '../ModeratorsForm/ModeratorsUpdateForm'
 import PinUserAcceptForm from '../PinsForm/PinUserAcceptForm'
-import CategoriesUpdateForm from '../PinsForm/CategoriesUpdateForm'
+import PinBrigadeAcceptForm from '../PinsForm/PinBrigadeAcceptForm'
 import BrigadeUpdateForm from "../BrigadesForm/BrigadeUpdateForm";
+import BrigadeAddForm from "../BrigadesForm/BrigadesForm";
 import CustomerUpdateForm from "../UsersForm/UsersUpdateForm";
 import Sidebar from '../Layout/Sidebar/Sidebar';
 
@@ -17,9 +18,10 @@ import Sidebar from '../Layout/Sidebar/Sidebar';
 const DRAWER_COMPONENTS = {
   MODERATOR_FORM: ModeratorsForm,
   MODERATOR_UPDATE_FORM: ModeratorsUpdateForm,
-  CATEGORY_FORM: PinUserAcceptForm,
-  CATEGORY_FORM_UPDATE: CategoriesUpdateForm,
-  VENDOR_UPDATE_FORM: BrigadeUpdateForm,
+  PIN_ACCEPT_FORM: PinUserAcceptForm,
+  PIN_BRIGADE_ACCEPT_FORM: PinBrigadeAcceptForm,
+  BRIGADE_ADD_FORM: BrigadeAddForm,
+  BRIGADE_UPDATE_FORM: BrigadeUpdateForm,
   CUSTOMER_UPDATE_FORM: CustomerUpdateForm,
   SIDEBAR: Sidebar,
 };

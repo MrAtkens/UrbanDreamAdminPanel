@@ -26,11 +26,19 @@ const Row = withStyle(Rows, () => ({
 // @ts-ignore
 const BrigadesTable = observer(() => {
     const dispatch = useDrawerDispatch();
+    const openDrawer = useCallback(
+        () =>
+            dispatch({
+                type: 'OPEN_DRAWER',
+                drawerComponent: 'BRIGADE_ADD_FORM',
+            }),
+        [dispatch]
+    );
     const openEditDrawer = useCallback(
         () =>
             dispatch({
                 type: 'OPEN_DRAWER',
-                drawerComponent: 'VENDOR_UPDATE_FORM',
+                drawerComponent: 'BRIGADE_UPDATE_FORM',
             }),
         [dispatch]
     );
@@ -55,7 +63,7 @@ const BrigadesTable = observer(() => {
             <Row>
                 <Col md={12}>
                     <MaterialTable
-                        title="Таблица продавцов"
+                        title="Таблица бригад"
                         columns={[
                             { title: 'ID', field: 'id', editable: 'never' },
                             { title: 'Имя', field: "firstName"},
@@ -83,6 +91,12 @@ const BrigadesTable = observer(() => {
                                 tooltip: 'Подгрузить данные',
                                 isFreeAction: true,
                                 onClick: () => brigade.getBrigades(),
+                            },
+                            {
+                                icon: 'add',
+                                tooltip: 'Добавить бригады',
+                                isFreeAction: true,
+                                onClick: () => openDrawer()
                             }
                         ]}
                         editable={{
