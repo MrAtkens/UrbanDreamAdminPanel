@@ -30,6 +30,7 @@ class System implements ISystem{
 
     async authenticate(login, password){
         const response = await authenticationService.userSingInApi(login, password);
+        authorizationStatusValidation(response.status);
         if(response.status === 200){
             localStorage.setItem('jwt_token', response.data);
             this.isSubmitting = false;
@@ -38,7 +39,6 @@ class System implements ISystem{
             })
         }
         else{
-            authorizationStatusValidation(response.status);
             this.isSubmitting = false
         }
     }

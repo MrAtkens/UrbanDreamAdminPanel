@@ -4,7 +4,7 @@ import { withStyle } from 'baseui';
 import { Grid, Row as Rows, Col as Column } from 'components/FlexBox';
 import { useDrawerDispatch } from 'context/DrawerContext';
 import MaterialTable from 'material-table';
-import customers from "stores/customersStore";
+import brigade from "stores/brigadesStore";
 import {tableLocalization} from "../../settings/tableLocalization";
 
 const Col = withStyle(Column, () => ({
@@ -24,28 +24,29 @@ const Row = withStyle(Rows, () => ({
 }));
 
 // @ts-ignore
-const CustomersTable = observer(() => {
+const BrigadesTable = observer(() => {
     const dispatch = useDrawerDispatch();
     const openEditDrawer = useCallback(
         () =>
             dispatch({
                 type: 'OPEN_DRAWER',
-                drawerComponent: 'CUSTOMER_UPDATE_FORM',
+                drawerComponent: 'VENDOR_UPDATE_FORM',
             }),
         [dispatch]
     );
-
     useEffect(() => {
-        customers.getCustomers();
-    },[])
+        brigade.getBrigades().then(() => {
+            console.log(brigade.getBrigadesTable)
+        })
+    }, [])
 
-    if (customers.error) {
-        return <div>Error! {customers.error}</div>;
+    if (brigade.error) {
+        return <div>Error! {brigade.error}</div>;
     }
 
     function openEdit(event, row){
-        console.log(row)
-        customers.id = row.id;
+        console.log(event)
+        brigade.id = row.id;
         openEditDrawer();
     }
 
@@ -54,7 +55,7 @@ const CustomersTable = observer(() => {
             <Row>
                 <Col md={12}>
                     <MaterialTable
-                        title="Таблица покупателей"
+                        title="Таблица продавцов"
                         columns={[
                             { title: 'ID', field: 'id', editable: 'never' },
                             { title: 'Имя', field: "firstName"},
@@ -63,7 +64,7 @@ const CustomersTable = observer(() => {
                             { title: 'Почта', field: "email" },
                             { title: 'Дата добавление', field: "creationDate"},
                         ]}
-                        data={customers.getCustomersTable}
+                        data={brigade.getBrigadesTable}
                         localization={tableLocalization}
                         options={{
                             actionsColumnIndex: -1,
@@ -81,17 +82,14 @@ const CustomersTable = observer(() => {
                                 icon: 'refresh',
                                 tooltip: 'Подгрузить данные',
                                 isFreeAction: true,
-                                onClick: () => customers.getCustomers(),
+                                onClick: () => brigade.getBrigades(),
                             }
                         ]}
                         editable={{
                             onRowDelete: (oldData) =>
                                 new Promise((resolve, reject)  => {
-                                    setTimeout(() => {
-                                        customers.deleteCustomer(oldData.id)
-                                        // @ts-ignore
-                                        resolve();
-                                    }, 1000)
+                                    console.log(oldData)
+                                    brigade.deleteBrigade(oldData.id)
                                 })
                         }}
                     />
@@ -101,4 +99,4 @@ const CustomersTable = observer(() => {
     );
 })
 
-export default CustomersTable;
+export default BrigadesTable;

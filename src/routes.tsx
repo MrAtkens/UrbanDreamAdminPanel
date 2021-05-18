@@ -15,10 +15,10 @@ import system from 'stores/systemStore'
 
 const AdminLayout = lazy(() => import('containers/Layout/Layout'));
 const Dashboard = lazy(() => import('containers/Dashboard/Dashboard'));
-const Categories = lazy(() => import('containers/Categories/Categories'));
+// const Pins = lazy(() => import('containers/Pins/Pins'));
 const Moderators = lazy(() => import('containers/Moderators/Moderators'));
-const Vendors = lazy(() => import('containers/Vendors/Vendors'));
-const Customers = lazy(() => import('containers/Customers/Customers'))
+const Brigades = lazy(() => import('containers/Brigades/Brigades'));
+const Users = lazy(() => import('containers/Users/Users'))
 const Login = lazy(() => import('containers/Login/Login'));
 const NotFound = lazy(() => import('containers/NotFound/NotFound'));
 
@@ -66,26 +66,26 @@ const Routes = observer(() => {
                 </Suspense>
               </AdminLayout>
             </PrivateRoute>
-            <PrivateRoute system={system} path={CATEGORY}>
-              <AdminLayout>
-                <Suspense fallback={<InLineLoader />}>
-                  <Categories />
-                </Suspense>
-              </AdminLayout>
-            </PrivateRoute>
+            {/*<PrivateRoute system={system} path={CATEGORY}>*/}
+            {/*  <AdminLayout>*/}
+            {/*    <Suspense fallback={<InLineLoader />}>*/}
+            {/*      <Pins />*/}
+            {/*    </Suspense>*/}
+            {/*  </AdminLayout>*/}
+            {/*</PrivateRoute>*/}
             <Route component={NotFound} />
           </Switch>}
             <PrivateRoute system={system} path={VENDORS}>
                 <AdminLayout>
                     <Suspense fallback={<InLineLoader />}>
-                        <Vendors />
+                        <Brigades />
                     </Suspense>
                 </AdminLayout>
             </PrivateRoute>
             <PrivateRoute system={system} path={CUSTOMERS}>
                 <AdminLayout>
                     <Suspense fallback={<InLineLoader />}>
-                        <Customers />
+                        <Users />
                     </Suspense>
                 </AdminLayout>
             </PrivateRoute>

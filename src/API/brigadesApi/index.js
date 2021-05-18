@@ -22,7 +22,7 @@ const getBrigadeByIdAPI = async (id) => {
     })
 }
 
-const addBrigade = async (firstName, lastName, login, password, brigadeName, brigadeWorkAddress, brigadeWorkersCount) => {
+const addBrigade = async (firstName, lastName, brigadeName, brigadeWorkAddress, brigadeWorkersCount, login, password) => {
     return await axios.post(`${URLAdmin}/api/brigade`, {
         firstName: firstName,
         lastName: lastName,
@@ -42,7 +42,7 @@ const addBrigade = async (firstName, lastName, login, password, brigadeName, bri
 }
 
 
-const editBrigadeAPI = async (id, firstName, lastName, login, password, brigadeName, brigadeWorkAddress, brigadeWorkersCount) => {
+const editBrigadeAPI = async (id, firstName, lastName, brigadeName, brigadeWorkAddress, brigadeWorkersCount, login, password) => {
     return await axios.put(`${URLAdmin}/api/brigade/${id}`, {
         firstName: firstName,
         lastName: lastName,
@@ -75,6 +75,7 @@ const deleteBrigadeAPI = async (id) => {
 export const brigadeService = {
     getBrigadesAPI,
     getBrigadeByIdAPI,
+    addBrigade,
     editBrigadeAPI,
     deleteBrigadeAPI
 };

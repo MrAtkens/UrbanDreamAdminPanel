@@ -15,9 +15,9 @@ import {
 
 import { DashboardIcon } from 'assets/icons/DashboardIcon';
 import { UserAvatar } from 'assets/icons/UserAvatar'; // Moderators
-import { GroceryIcon } from 'assets/icons/GroceryIcon'; // Vendors
+import { GroceryIcon } from 'assets/icons/GroceryIcon'; // Brigades
 import { SidebarCategoryIcon } from 'assets/icons/SidebarCategoryIcon' // Category
-import { CustomerIcon } from "assets/icons/CustomerIcon"; // Customers
+import { CustomerIcon } from "assets/icons/CustomerIcon"; // Users
 import { LogoutIcon } from 'assets/icons/LogoutIcon';
 
 import system from 'stores/systemStore'

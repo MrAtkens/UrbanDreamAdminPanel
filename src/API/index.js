@@ -1,5 +1,5 @@
 export { authenticationService } from './authenticationApi'
 export { moderatorsService } from './moderatorsApi'
 export { brigadeService } from './brigadesApi'
-export { categoriesService } from './categoriesApi'
+export { pinsService } from './pinsApi'
 export { usersService } from './usersApi'

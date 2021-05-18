@@ -1,4 +1,10 @@
-import { toastServerError, toastUnauthorizedError, toastAuthError, toastUserNotFound } from '../toastifyTools'
+import {
+    toastServerError,
+    toastUnauthorizedError,
+    toastAuthError,
+    toastUserNotFound,
+    toastLoginSuccess
+} from '../toastifyTools'
 
 export const authorizationStatusValidation = (status) => {
     if(status === 500)
@@ -7,6 +13,8 @@ export const authorizationStatusValidation = (status) => {
         toastUserNotFound()
     else if (status === 401)
         toastAuthError()
+    else if (status === 200)
+        toastLoginSuccess()
 }
 
 export const userGetDataStatus = (status) => {

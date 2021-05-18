@@ -7,19 +7,19 @@ import { useDrawerState, useDrawerDispatch } from 'context/DrawerContext';
 /** Drawer Components */
 import ModeratorsForm from '../ModeratorsForm/ModeratorsForm';
 import ModeratorsUpdateForm from '../ModeratorsForm/ModeratorsUpdateForm'
-import CategoriesForm from '../CategoriesForm/CategoriesForm'
-import CategoriesUpdateForm from '../CategoriesForm/CategoriesUpdateForm'
-import VendorUpdateForm from "../VendorsForm/VendorUpdateForm";
-import CustomerUpdateForm from "../CustomersForm/CustomerUpdateForm";
+import PinUserAcceptForm from '../PinsForm/PinUserAcceptForm'
+import CategoriesUpdateForm from '../PinsForm/CategoriesUpdateForm'
+import BrigadeUpdateForm from "../BrigadesForm/BrigadeUpdateForm";
+import CustomerUpdateForm from "../UsersForm/UsersUpdateForm";
 import Sidebar from '../Layout/Sidebar/Sidebar';
 
 /** Components Name Constants */
 const DRAWER_COMPONENTS = {
   MODERATOR_FORM: ModeratorsForm,
   MODERATOR_UPDATE_FORM: ModeratorsUpdateForm,
-  CATEGORY_FORM: CategoriesForm,
+  CATEGORY_FORM: PinUserAcceptForm,
   CATEGORY_FORM_UPDATE: CategoriesUpdateForm,
-  VENDOR_UPDATE_FORM: VendorUpdateForm,
+  VENDOR_UPDATE_FORM: BrigadeUpdateForm,
   CUSTOMER_UPDATE_FORM: CustomerUpdateForm,
   SIDEBAR: Sidebar,
 };

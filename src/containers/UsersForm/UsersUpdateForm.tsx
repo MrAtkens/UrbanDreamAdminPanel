@@ -13,25 +13,25 @@ import {
   ButtonGroup,
 } from 'containers/DrawerItems/DrawerItems.style';
 
-import vendors from 'stores/vendorsStore'
+import users from 'stores/usersStore'
 import {Error} from "../../components/FormFields";
 import Checkbox from "../../components/CheckBox";
 
 type Props = any;
 
-const VendorUpdateForm: React.FC<Props> = observer(() => {
+const UserUpdateForm: React.FC<Props> = observer(() => {
   const dispatch = useDrawerDispatch();
   const closeDrawer = useCallback(() => dispatch({ type: 'CLOSE_DRAWER' }), [
     dispatch,
   ]);
-  const [checked, setChecked] = React.useState(false);
   const { register, errors, handleSubmit } = useForm({
     mode: 'onChange',
-    defaultValues: vendors.getVendorById
+    defaultValues: users.getUserById
   });
+  const [checked, setChecked] = React.useState(false);
   const onSubmit = (data) => {
     console.log(data)
-    vendors.editVendor(data.firstName, data.lastName, data.phoneNumber, data.password, data.email).then(() => {
+    users.editUser(data.firstName, data.lastName, data.phoneNumber, data.password, data.email).then(() => {
       closeDrawer();
     })
   };
@@ -39,7 +39,7 @@ const VendorUpdateForm: React.FC<Props> = observer(() => {
   return (
     <>
       <DrawerTitleWrapper>
-        <DrawerTitle>Изменить Продавца</DrawerTitle>
+        <DrawerTitle>Изменить Покупателя</DrawerTitle>
       </DrawerTitleWrapper>
 
       <Form
@@ -64,7 +64,7 @@ const VendorUpdateForm: React.FC<Props> = observer(() => {
           <Row>
             <Col lg={4}>
               <FieldDetails>
-                Введите данные о продавце для изменение, если вы не хотите изменять данные покупателя оставьте поля старых значений <br/>
+                Введите данные о покупателе для изменение, если вы не хотите изменять данные покупателя оставьте поля старых значений <br/>
                 Номер телефона должен быть введён в таком ввиде +7-999-999-99-99
               </FieldDetails>
             </Col>
@@ -183,4 +183,4 @@ const VendorUpdateForm: React.FC<Props> = observer(() => {
   );
 })
 
-export default VendorUpdateForm;
+export default UserUpdateForm;

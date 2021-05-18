@@ -3,12 +3,10 @@ import { observer } from "mobx-react-lite";
 import { useForm } from 'react-hook-form';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { useDrawerDispatch } from 'context/DrawerContext';
-import Input from 'components/Input';
 import Button, { KIND } from 'components/Button';
 import { Textarea } from 'components/Textarea';
 
 import DrawerBox from 'components/DrawerBox';
-import Uploader from 'components/Uploader';
 import { Row, Col } from 'components/FlexBox';
 import {
   Form,
@@ -18,24 +16,26 @@ import {
   ButtonGroup,
 } from '../DrawerItems/DrawerItems.style';
 import { FormFields, FormLabel, Error } from 'components/FormFields';
-import categories from 'stores/categoriesStore'
+import pins from 'stores/pinStore'
+import {FormControl, FormControlLabel, Radio, RadioGroup} from "@material-ui/core";
 
 type Props = any;
 
-const CategoriesForm: React.FC<Props> = observer((props) => {
+const PinUserAcceptForm: React.FC<Props> = observer((props) => {
   const dispatch = useDrawerDispatch();
   const [description, setDescription] = useState('');
+  const [state, setState] = useState('');
   const closeDrawer = useCallback(() => dispatch({ type: 'CLOSE_DRAWER' }), [
     dispatch,
   ]);
   const { register, errors, handleSubmit, setValue } = useForm({mode: 'onChange'});
   useEffect(() => {
-    register({ name: 'image' }, { required: true });
-    register({ name: 'description' }, { required: true });
+    register({ name: 'description' }, { required: true, minLength: 100, maxLength: 2000 });
+    register({ name: 'state' }, { required: true });
   }, [register]);
   const onSubmit = (data) => {
     console.log(data)
-    categories.addCategory(data.name, data.description, data.image).then(() => {
+    pins.acceptUserPin(data.state, data.description).then(() => {
       closeDrawer();
     })
   };
@@ -45,9 +45,6 @@ const CategoriesForm: React.FC<Props> = observer((props) => {
       handleSubmit(onSubmit)();
   }
 
-  const handleUploader = (files) => {
-    setValue('image', files[0]);
-  };
 
   const handleDescriptionChange = (e) => {
     const value = e.target.value;
@@ -55,10 +52,16 @@ const CategoriesForm: React.FC<Props> = observer((props) => {
     setDescription(value);
   };
 
+  const handleStateChange = (e) => {
+    const value = e.target.value;
+    setValue('state', value);
+    setState(value);
+  };
+
   return (
       <>
         <DrawerTitleWrapper>
-          <DrawerTitle>Добавить Категорию</DrawerTitle>
+          <DrawerTitle>Проверка маркера бригады</DrawerTitle>
         </DrawerTitleWrapper>
 
         <Form onSubmit={handleSubmit(onSubmit)} style={{ height: '100%' }}>
@@ -77,55 +80,32 @@ const CategoriesForm: React.FC<Props> = observer((props) => {
           >
             <Row>
               <Col lg={4}>
-                <FieldDetails>Загрузите иконку категорий</FieldDetails>
-              </Col>
-              <Col lg={8}>
-                <DrawerBox
-                    overrides={{
-                      Block: {
-                        style: {
-                          width: '100%',
-                          height: 'auto',
-                          padding: '30px',
-                          borderRadius: '3px',
-                          backgroundColor: '#ffffff',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                        },
-                      },
-                    }}
-                >
-                  <Uploader onChange={handleUploader} />
-                  {errors.image && <Error>Не загружена иконка категорий*</Error>}
-                </DrawerBox>
-              </Col>
-            </Row>
-            <Row>
-              <Col lg={4}>
                 <FieldDetails>
-                  Введите название категорий, описание и индекс сортировки.<br/>
-                  Название будет показываться пользователям в выборе категорий.<br/>
-                  Описание будет показываться при навидений на категорий для подробного разъяснение.<br/>
+                  Напишите ответ об отказе или наоборот о подтверждений маркера и, по каким причинам вы подтвердили или отменили маркер.<br/>
                 </FieldDetails>
               </Col>
-
               <Col lg={8}>
                 <DrawerBox>
                   <FormFields>
-                    <FormLabel>Название</FormLabel>
-                    <Input
-                        onKeyDown={handleKeyDown}
-                        inputRef={register({ required: true})}
-                        name="name"
-                        placeholder="Ex: Название"
-                    />
-                    {errors.name && <Error>Не введёно название*</Error>}
+                    <FormLabel>Состояние маркера</FormLabel>
+                    <FormControl component="fieldset">
+                      <RadioGroup aria-label="Состояние маркера" name="state" value={state} onChange={handleStateChange}>
+                        <FormControlLabel value={2} control={<Radio />} label="Подтвердить" />
+                        <FormControlLabel value={3} control={<Radio />} label="Отклонить" />
+                      </RadioGroup>
+                    </FormControl>
+                    {errors.description && <Error>Не выбрано состояние маркера*</Error>}
                   </FormFields>
+                </DrawerBox>
+              </Col>
+              <Col lg={8}>
+                <DrawerBox>
                   <FormFields>
                     <FormLabel>Описание</FormLabel>
                     <Textarea
                         value={description}
                         onChange={handleDescriptionChange}
+                        onKeyDown={handleKeyDown}
                     />
                     {errors.description && <Error>Не введёно описание*</Error>}
                   </FormFields>
@@ -169,7 +149,7 @@ const CategoriesForm: React.FC<Props> = observer((props) => {
                   },
                 }}
             >
-              Добавить Категорию
+              Отправить
             </Button>
           </ButtonGroup>
         </Form>
@@ -177,4 +157,4 @@ const CategoriesForm: React.FC<Props> = observer((props) => {
   );
 });
 
-export default CategoriesForm;
+export default PinUserAcceptForm;

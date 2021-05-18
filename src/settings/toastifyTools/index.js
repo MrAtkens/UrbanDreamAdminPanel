@@ -37,4 +37,18 @@ export const toastUnauthorizedError = () => {
     toast.error("Ваш токен валидаций истёк, вам надо перезайти", defaultSetings)
 }
 
+export const toastLogOutSuccess = () => {
+    toast.info("Вы успешно вышли из системы", defaultSetings)
+}
 
+//Status 200
+export const toastLoginSuccess = () => {
+    toast.success("Вы успешно вошли в систему", defaultSetings)
+}
+export const toastAcceptUserPinSuccess = (pinName) => {
+    toast.success(`Вы успешно ответили пользователю, по пину ${pinName}`, defaultSetings)
+}
+
+export const toastModerateUserPinSuccess = (pinName) => {
+    toast.success(`Вы успешно ответили бригаде, по пину ${pinName}`, defaultSetings)
+}

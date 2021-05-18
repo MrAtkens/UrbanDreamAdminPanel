@@ -4,10 +4,7 @@ import { withStyle } from 'baseui';
 import { Grid, Row as Rows, Col as Column } from 'components/FlexBox';
 import { useDrawerDispatch } from 'context/DrawerContext';
 import MaterialTable from 'material-table';
-import Image from 'material-ui-image';
-
-
-import categories from "stores/categoriesStore";
+import users from "stores/usersStore";
 import {tableLocalization} from "../../settings/tableLocalization";
 
 const Col = withStyle(Column, () => ({
@@ -27,48 +24,45 @@ const Row = withStyle(Rows, () => ({
 }));
 
 // @ts-ignore
-const CategoriesTable = observer(() => {
+const CustomersTable = observer(() => {
     const dispatch = useDrawerDispatch();
-    const openDrawer = useCallback(
-        () => dispatch({ type: 'OPEN_DRAWER', drawerComponent: 'CATEGORY_FORM' }),
-        [dispatch]
-    );
     const openEditDrawer = useCallback(
         () =>
             dispatch({
                 type: 'OPEN_DRAWER',
-                drawerComponent: 'CATEGORY_FORM_UPDATE',
+                drawerComponent: 'CUSTOMER_UPDATE_FORM',
             }),
         [dispatch]
     );
 
     useEffect(() => {
-        categories.getCategories()
-    }, [])
+        users.getUsers();
+    },[])
 
-    if (categories.error) {
-        return <div>Error! {categories.error}</div>;
+    if (users.error) {
+        return <div>Error! {users.error}</div>;
     }
 
     function openEdit(event, row){
-        console.log(event)
-        categories.id = row.id;
+        console.log(row)
+        users.id = row.id;
         openEditDrawer();
     }
+
     return (
         <Grid fluid={true}>
             <Row>
                 <Col md={12}>
                     <MaterialTable
-                        title="Таблица категорий"
+                        title="Таблица покупателей"
                         columns={[
                             { title: 'ID', field: 'id', editable: 'never' },
-                            { title: 'Иконка', field: 'urlImg', render: rowData => <Image src={rowData.urlImg}  aspectRatio={(16/9)}/> },
-                            { title: 'Название', field: "name"},
-                            { title: 'Описание', field: "description"},
+                            { title: 'Имя', field: "firstName"},
+                            { title: 'Фамилия', field: "lastName" },
+                            { title: 'Почта', field: "email" },
                             { title: 'Дата добавление', field: "creationDate"},
                         ]}
-                        data={categories.getCategoriesTable}
+                        data={users.getUsersTable}
                         localization={tableLocalization}
                         options={{
                             actionsColumnIndex: -1,
@@ -86,21 +80,14 @@ const CategoriesTable = observer(() => {
                                 icon: 'refresh',
                                 tooltip: 'Подгрузить данные',
                                 isFreeAction: true,
-                                onClick: () => categories.getCategories(),
-                            },
-                            {
-                                icon: 'add',
-                                tooltip: 'Добавить редактора',
-                                isFreeAction: true,
-                                onClick: () => openDrawer()
+                                onClick: () => users.getUsers(),
                             }
                         ]}
                         editable={{
                             onRowDelete: (oldData) =>
                                 new Promise((resolve, reject)  => {
                                     setTimeout(() => {
-                                        console.log(oldData)
-                                        categories.deleteCategory(oldData.id)
+                                        users.deleteUser(oldData.id)
                                         // @ts-ignore
                                         resolve();
                                     }, 1000)
@@ -113,4 +100,4 @@ const CategoriesTable = observer(() => {
     );
 })
 
-export default CategoriesTable;
+export default CustomersTable;
