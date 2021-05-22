@@ -9,14 +9,13 @@ import {
   LogoutBtn,
 } from './Sidebar.style';
 import {
-    CATEGORY,
-    DASHBOARD, MODERATORS,VENDORS, CUSTOMERS
+    DASHBOARD,
+    MODERATORS, BRIGADES, PINS, USERS
 } from 'settings/constants';
 
 import { DashboardIcon } from 'assets/icons/DashboardIcon';
+import { CheckMark } from 'assets/icons/CheckMark'
 import { UserAvatar } from 'assets/icons/UserAvatar'; // Moderators
-import { GroceryIcon } from 'assets/icons/GroceryIcon'; // Brigades
-import { SidebarCategoryIcon } from 'assets/icons/SidebarCategoryIcon' // Category
 import { CustomerIcon } from "assets/icons/CustomerIcon"; // Users
 import { LogoutIcon } from 'assets/icons/LogoutIcon';
 
@@ -35,12 +34,6 @@ const sidebarSuperAdminMenus = [
         exact: false,
         icon: <UserAvatar />,
     },
-    {
-        name: 'Категории',
-        path: CATEGORY,
-        exact: false,
-        icon: <SidebarCategoryIcon />,
-    },
 ];
 
 
@@ -52,16 +45,22 @@ const sidebarModeratorMenus = [
         icon: <DashboardIcon />,
     },
     {
-        name: 'Продавцы',
-        path: VENDORS,
+        name: 'Маркеры проблем',
+        path: PINS,
         exact: false,
-        icon: <GroceryIcon />,
+        icon: <CheckMark />,
     },
     {
-        name: 'Покупатели',
-        path: CUSTOMERS,
+        name: 'Пользователи',
+        path: USERS,
         exact: false,
-        icon: <CustomerIcon />
+        icon: <UserAvatar />,
+    },
+    {
+        name: 'Бригады',
+        path: BRIGADES,
+        exact: false,
+        icon: <CustomerIcon/>
     }
 ];
 

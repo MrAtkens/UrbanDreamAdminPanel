@@ -3,11 +3,9 @@ import { ToastContainer } from 'react-toastify'
 import {observer} from "mobx-react-lite";
 import { Route, Switch, Redirect } from 'react-router-dom';
 import {
-  LOGIN,
-  DASHBOARD,
-  MODERATORS,
-  VENDORS,
-  CUSTOMERS, CATEGORY
+    LOGIN,
+    DASHBOARD,
+    MODERATORS, BRIGADES, PINS, USERS
 } from 'settings/constants';
 import { InLineLoader } from 'components/InlineLoader';
 
@@ -15,7 +13,7 @@ import system from 'stores/systemStore'
 
 const AdminLayout = lazy(() => import('containers/Layout/Layout'));
 const Dashboard = lazy(() => import('containers/Dashboard/Dashboard'));
-// const Pins = lazy(() => import('containers/Pins/Pins'));
+const Pins = lazy(() => import('containers/Pins/PinsMap'));
 const Moderators = lazy(() => import('containers/Moderators/Moderators'));
 const Brigades = lazy(() => import('containers/Brigades/Brigades'));
 const Users = lazy(() => import('containers/Users/Users'))
@@ -66,23 +64,23 @@ const Routes = observer(() => {
                 </Suspense>
               </AdminLayout>
             </PrivateRoute>
-            {/*<PrivateRoute system={system} path={CATEGORY}>*/}
-            {/*  <AdminLayout>*/}
-            {/*    <Suspense fallback={<InLineLoader />}>*/}
-            {/*      <Pins />*/}
-            {/*    </Suspense>*/}
-            {/*  </AdminLayout>*/}
-            {/*</PrivateRoute>*/}
+            <PrivateRoute system={system} path={PINS}>
+              <AdminLayout>
+                <Suspense fallback={<InLineLoader />}>
+                  <Pins />
+                </Suspense>
+              </AdminLayout>
+            </PrivateRoute>
             <Route component={NotFound} />
           </Switch>}
-            <PrivateRoute system={system} path={VENDORS}>
+            <PrivateRoute system={system} path={BRIGADES}>
                 <AdminLayout>
                     <Suspense fallback={<InLineLoader />}>
                         <Brigades />
                     </Suspense>
                 </AdminLayout>
             </PrivateRoute>
-            <PrivateRoute system={system} path={CUSTOMERS}>
+            <PrivateRoute system={system} path={USERS}>
                 <AdminLayout>
                     <Suspense fallback={<InLineLoader />}>
                         <Users />
