@@ -5,9 +5,9 @@ import Topbar from './Topbar/Topbar';
 import DrawerItems from '../DrawerItems/DrawerItems';
 import { DrawerProvider } from 'context/DrawerContext';
 import {
-  LayoutWrapper,
-  ContentWrapper,
-  ContentInnerWrapper,
+    LayoutWrapper,
+    ContentWrapper,
+    ContentInnerWrapper, ContentInnerWrapperMap,
 } from './Layout.style';
 import { styled } from 'baseui';
 import { useMedia } from 'settings/use-media';
@@ -18,7 +18,7 @@ const SidedbarDesktop = styled('div', () => ({
   },
 }));
 
-const AdminLayout = ({ children }: any) => {
+const AdminLayout = ({children, isMap = false}:any) => {
   let [topbarRef, { height }] = useComponentSize();
   let [sidebarRef, { width }] = useComponentSize();
   const desktop = useMedia('(min-width: 992px)');
@@ -46,7 +46,11 @@ const AdminLayout = ({ children }: any) => {
                 width: `calc(100% - ${width}px)`,
               }}
             >
-              <ContentInnerWrapper>{children}</ContentInnerWrapper>
+                {isMap === true ? (
+                    <ContentInnerWrapperMap>{children}</ContentInnerWrapperMap>
+                ) : (
+                    <ContentInnerWrapper>{children}</ContentInnerWrapper>
+                )}
             </ContentWrapper>
           </>
         ) : (

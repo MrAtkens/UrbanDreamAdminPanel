@@ -28,7 +28,7 @@ const BrigadeAddForm: React.FC<Props> = observer((props) => {
   const { register, errors, handleSubmit } = useForm({mode: 'onChange'});
 
   const onSubmit = (data) => {
-    brigadeStore.addBrigade(data.firstName, data.lastName, data.brigadeName, data.brigadeAddress, data.brigadeCount, data.login, data.password).then(() => {
+    brigadeStore.addBrigade(data.firstName, data.lastName, data.brigadeName, data.brigadeWorkAddress, data.brigadeCount, data.login, data.password).then(() => {
       closeDrawer();
     })
   };
@@ -76,7 +76,7 @@ const BrigadeAddForm: React.FC<Props> = observer((props) => {
                   <FormFields>
                     <FormLabel>Фамилия</FormLabel>
                     <Input
-                        inputRef={register({ required: true, minLength: 2 })}
+                        inputRef={register({ required: true, minLength: 6, maxLength: 20 })}
                         name="lastName"
                         placeholder="Ex: Фамилия главного бригадира"
                     />
@@ -104,20 +104,11 @@ const BrigadeAddForm: React.FC<Props> = observer((props) => {
                     <FormLabel>Количество рабочих в бригаде</FormLabel>
                     <Input
                         inputRef={register({ required: true})}
-                        name="brigadeWorkAddress"
+                        name="brigadeCount"
                         type="number"
                         placeholder="Ex: Кол рабочих"
                     />
                     {errors.brigadeCount && <Error>Введите количество рабочих в бригаде*</Error>}
-                  </FormFields>
-                  <FormFields>
-                    <FormLabel>Фамилия</FormLabel>
-                    <Input
-                        inputRef={register({ required: true, minLength: 6, maxLength: 20 })}
-                        name="lastName"
-                        placeholder="Ex: Фамилия главного бригадира"
-                    />
-                    {errors.lastName && <Error>Фамилия должна быть введена*</Error>}
                   </FormFields>
                   <FormFields>
                     <FormLabel>Логин</FormLabel>

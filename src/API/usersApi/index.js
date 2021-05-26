@@ -22,11 +22,10 @@ const getUserById = async (id) => {
   })
 }
 
-const editUser = async (id, firstName, lastName, phoneNumber, password, email) => {
+const editUser = async (id, firstName, lastName, password, email) => {
   return await axios.put(`${URLAdmin}/api/user/${id}`, {
         firstName: firstName,
         lastName: lastName,
-        phoneNumber: phoneNumber,
         password: password,
         email: email
   }, {headers:

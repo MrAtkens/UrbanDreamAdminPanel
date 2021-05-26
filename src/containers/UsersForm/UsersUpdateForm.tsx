@@ -31,7 +31,7 @@ const UserUpdateForm: React.FC<Props> = observer(() => {
   const [checked, setChecked] = React.useState(false);
   const onSubmit = (data) => {
     console.log(data)
-    users.editUser(data.firstName, data.lastName, data.phoneNumber, data.password, data.email).then(() => {
+    users.editUser(data.firstName, data.lastName, data.password, data.email).then(() => {
       closeDrawer();
     })
   };
@@ -97,16 +97,6 @@ const UserUpdateForm: React.FC<Props> = observer(() => {
                       name="email"
                   />
                   {errors.email && <Error>Почта была введина не коректна</Error>}
-                </FormFields>
-                <FormFields>
-                  <FormLabel>Телефон</FormLabel>
-                  <Input
-                      type="phone"
-                      inputRef={register({ required: true, minLength: 12, maxLength: 12, pattern: /^[+]7-*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/i })}
-                      name="phoneNumber"
-                      placeholder="Ex: +7-999-999-99-99"
-                  />
-                  {errors.phoneNumber && <Error>Номер телефона должен быть введён в таком ввиде +7</Error>}
                 </FormFields>
                 <FormFields>
                   <Checkbox

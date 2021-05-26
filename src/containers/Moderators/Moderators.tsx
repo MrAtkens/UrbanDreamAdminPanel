@@ -93,7 +93,7 @@ const ModeratorsTable = observer(() => {
                             onRowDelete: (oldData) =>
                                 new Promise((resolve, reject)  => {
                                     setTimeout(() => {
-                                        moderators.deleteModerator(oldData.id)
+                                        moderators.deleteModerator(oldData.id, oldData.login)
                                         // @ts-ignore
                                         resolve();
                                     }, 1000)

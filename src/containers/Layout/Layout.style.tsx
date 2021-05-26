@@ -24,3 +24,15 @@ export const ContentInnerWrapper = styled('div', () => ({
     padding: '45px 15px',
   },
 }));
+
+export const ContentInnerWrapperMap = styled('div', () => ({
+  width: '100%',
+  height: 'auto',
+  overflow: 'hidden',
+  overflowY: 'auto',
+
+  '@media only screen and (max-width: 767px)': {
+    padding: '45px 15px',
+  },
+}));
+

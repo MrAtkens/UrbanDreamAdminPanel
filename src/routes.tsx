@@ -47,64 +47,63 @@ const Routes = observer(() => {
             if(system.getAuthenticated)
                 system.getUserData()
         }, []);
-  return (
-      <Suspense fallback={<InLineLoader />}>
-        <Switch>
-          <PrivateRoute system={system} exact={true} path={DASHBOARD}>
-            <AdminLayout>
-                <Dashboard />
-            </AdminLayout>
-          </PrivateRoute>
-          {system.role === 5 &&
-          <Switch>
-            <PrivateRoute system={system} path={MODERATORS}>
-              <AdminLayout>
-                <Suspense fallback={<InLineLoader />}>
-                  <Moderators />
-                </Suspense>
-              </AdminLayout>
-            </PrivateRoute>
-            <PrivateRoute system={system} path={PINS}>
-              <AdminLayout>
-                <Suspense fallback={<InLineLoader />}>
-                  <Pins />
-                </Suspense>
-              </AdminLayout>
-            </PrivateRoute>
-            <Route component={NotFound} />
-          </Switch>}
-            <PrivateRoute system={system} path={BRIGADES}>
+      return (
+          <Suspense fallback={<InLineLoader />}>
+            <Switch>
+              <PrivateRoute system={system} exact={true} path={DASHBOARD}>
                 <AdminLayout>
-                    <Suspense fallback={<InLineLoader />}>
-                        <Brigades />
-                    </Suspense>
+                    <Dashboard />
                 </AdminLayout>
-            </PrivateRoute>
-            <PrivateRoute system={system} path={USERS}>
-                <AdminLayout>
+              </PrivateRoute>
+              {system.role === 5 &&
+              <Switch>
+                <PrivateRoute system={system} path={MODERATORS}>
+                  <AdminLayout>
                     <Suspense fallback={<InLineLoader />}>
-                        <Users />
+                      <Moderators />
                     </Suspense>
-                </AdminLayout>
-            </PrivateRoute>
-          <Route path={LOGIN}>
-            <Login />
-          </Route>
-          <Route component={NotFound} />
-        </Switch>
-        <ToastContainer
-            position="bottom-right"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover/>
-      </Suspense>
-  );
-}
-);
+                  </AdminLayout>
+                </PrivateRoute>
+                <Route component={NotFound} />
+              </Switch>}
+                <PrivateRoute system={system} path={PINS}>
+                    <AdminLayout isMap={true}>
+                        <Suspense fallback={<InLineLoader />}>
+                            <Pins />
+                        </Suspense>
+                    </AdminLayout>
+                </PrivateRoute>
+                <PrivateRoute system={system} path={BRIGADES}>
+                    <AdminLayout>
+                        <Suspense fallback={<InLineLoader />}>
+                            <Brigades />
+                        </Suspense>
+                    </AdminLayout>
+                </PrivateRoute>
+                <PrivateRoute system={system} path={USERS}>
+                    <AdminLayout>
+                        <Suspense fallback={<InLineLoader />}>
+                            <Users />
+                        </Suspense>
+                    </AdminLayout>
+                </PrivateRoute>
+              <Route path={LOGIN}>
+                <Login />
+              </Route>
+              <Route component={NotFound} />
+            </Switch>
+            <ToastContainer
+                position="bottom-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover/>
+          </Suspense>
+      );
+});
 
 export default Routes;

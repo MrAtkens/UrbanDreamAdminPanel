@@ -18,7 +18,6 @@ import system from 'stores/systemStore'
 // @ts-ignore
 import Logo from "assets/image/logo.png";
 
-
 const Login = observer(() => {
 
     if (system.isAuthenticated) return <Redirect to={{ pathname: '/' }} />;
@@ -41,7 +40,6 @@ const Login = observer(() => {
                         </LogoWrapper>
                         <FormTitle>Вход</FormTitle>
                     </FormFields>
-
                     <FormFields>
                         <FormLabel>Логин</FormLabel>
                         <Input

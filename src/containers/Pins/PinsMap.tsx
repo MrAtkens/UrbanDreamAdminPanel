@@ -1,37 +1,28 @@
 import React, {useCallback, useEffect} from 'react';
 import { observer } from "mobx-react-lite";
 import { withStyle } from 'baseui';
-import { Grid, Row as Rows, Col as Column } from 'components/FlexBox';
+import { Grid, MapRow, MapCol } from 'components/FlexBox';
 import { useDrawerDispatch } from 'context/DrawerContext';
-import {Map, Placemark, YMaps} from "react-yandex-maps";
+import {Clusterer, Map, Placemark, YMaps} from "react-yandex-maps";
 
 
 import pins from "stores/pinStore";
-import {tableLocalization} from "../../settings/tableLocalization";
 
-const Col = withStyle(Column, () => ({
-    '@media only screen and (max-width: 767px)': {
-        marginBottom: '20px',
-
-        ':last-child': {
-            marginBottom: 0,
-        },
-    },
+const Col = withStyle(MapCol, () => ({
+    width: "100%",
+    height: "100%",
+    padding: 0
 }));
 
-const Row = withStyle(Rows, () => ({
-    '@media only screen and (min-width: 768px)': {
-        alignItems: 'center',
-    },
+const Row = withStyle(MapRow, () => ({
+    width: "100%",
+    height: "100%",
+    padding: 0
 }));
 
 // @ts-ignore
 const CategoriesTable = observer(() => {
     const dispatch = useDrawerDispatch();
-    const openDrawer = useCallback(
-        () => dispatch({ type: 'OPEN_DRAWER', drawerComponent: 'CATEGORY_FORM' }),
-        [dispatch]
-    );
     const openEditDrawer = useCallback(
         () =>
             dispatch({
@@ -49,19 +40,19 @@ const CategoriesTable = observer(() => {
         return <div>Error! {pins.error}</div>;
     }
 
-    function openEdit(event, row){
-        console.log(event)
+    const openEdit = (row) => {
+        console.log(row)
         pins.id = row.id;
         openEditDrawer();
     }
+
     return (
-        <Grid fluid={true}>
+        <Grid fluid={true} style={{width: "100%", height: "100%", padding: 0}}>
             <Row>
                 <Col md={12}>
-                    <YMaps>
+                    <YMaps style={{width: "100%", height: "100%"}}>
                         <Map
-                            width="100%"
-                            height="100%"
+                            width="100%" height="100%"
                             defaultState={{
                                 center: [51.17165477669397, 71.42999123084935],
                                 zoom: 17,
@@ -69,9 +60,16 @@ const CategoriesTable = observer(() => {
                             }}
                             modules={['control.ZoomControl', 'control.FullscreenControl']}
                         >
-                            {pins.getPinsTable.map(pin => (
-                                <Placemark properties={{iconCaption: "Офис HoloAds"}} defaultGeometry={[pin.latitude, pin.longitude]} />
-                            ))}
+                            <Clusterer
+                                options={{
+                                    preset: 'islands#invertedRedClusterIcons',
+                                    groupByCoordinates: false,
+                                }}
+                            >
+                                {pins.getPinsTable.map(pin => (
+                                    <Placemark properties={{iconCaption: pin.title}} options={{iconColor: "red"}} defaultGeometry={[pin.latitude, pin.longitude]} onClick={() => openEdit(pin)} />
+                                ))}
+                            </Clusterer>
                         </Map>
                     </YMaps>
                 </Col>

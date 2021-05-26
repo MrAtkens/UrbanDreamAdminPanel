@@ -54,7 +54,7 @@ const CustomersTable = observer(() => {
             <Row>
                 <Col md={12}>
                     <MaterialTable
-                        title="Таблица покупателей"
+                        title="Таблица Пользователей"
                         columns={[
                             { title: 'ID', field: 'id', editable: 'never' },
                             { title: 'Имя', field: "firstName"},
@@ -87,7 +87,7 @@ const CustomersTable = observer(() => {
                             onRowDelete: (oldData) =>
                                 new Promise((resolve, reject)  => {
                                     setTimeout(() => {
-                                        users.deleteUser(oldData.id)
+                                        users.deleteUser(oldData.id, oldData.login)
                                         // @ts-ignore
                                         resolve();
                                     }, 1000)

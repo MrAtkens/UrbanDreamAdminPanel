@@ -1,5 +1,9 @@
-import {makeAutoObservable, runInAction} from "mobx";
+import { makeAutoObservable } from "mobx";
+
 import { brigadeService } from 'API'
+import { brigadeStatusValidation } from 'settings/responseStatus'
+import { toastAddBrigade, toastEditBrigade, toastDeleteBrigade } from 'settings/toastifyTools'
+
 export interface ISystem {
     brigades: Array<Object>;
     brigadeEdit: Object;
@@ -39,19 +43,34 @@ class Brigades implements ISystem{
         return findBrigade;
     }
 
-    async addBrigade(firstName, lastName, brigadeName, brigadeAddress, brigadeCount, login, password){
-        const response = await brigadeService.addBrigade(firstName, lastName, brigadeName, brigadeAddress, brigadeCount, login, password)
-        console.log(response)
+    async addBrigade(firstName, lastName, brigadeName, brigadeWorkAddress, brigadeCount, login, password){
+        const response = await brigadeService.addBrigade(firstName, lastName, brigadeName, brigadeWorkAddress, brigadeCount, login, password)
+        brigadeStatusValidation(response.status)
+        if(response.status === 200) {
+            await this.getBrigades().then(() => {
+                toastAddBrigade(brigadeName)
+            })
+        }
     }
 
-    async editBrigade(firstName, lastName, brigadeName, brigadeAddress, brigadeCount, login, password){
-        const response = await brigadeService.editBrigadeAPI(this.id, firstName, lastName, brigadeName, brigadeAddress, brigadeCount, login, password)
-        console.log(response)
+    async editBrigade(firstName, lastName, brigadeName, brigadeWorkAddress, brigadeCount, login, password){
+        const response = await brigadeService.editBrigadeAPI(this.id, firstName, lastName, brigadeName, brigadeWorkAddress, brigadeCount, login, password)
+        brigadeStatusValidation(response.status)
+        if(response.status === 200) {
+            await this.getBrigades().then(() => {
+                toastEditBrigade(brigadeName)
+            })
+        }
     }
 
-    async deleteBrigade(id){
+    async deleteBrigade(id, brigadeName){
         const response = await brigadeService.deleteBrigadeAPI(id)
-        console.log(response)
+        brigadeStatusValidation(response.status)
+        if(response.status === 200) {
+            await this.getBrigades().then(() => {
+                toastDeleteBrigade(brigadeName)
+            })
+        }
     }
 
     setBrigades(brigades){

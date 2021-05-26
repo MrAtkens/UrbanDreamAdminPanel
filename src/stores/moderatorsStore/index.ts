@@ -1,5 +1,10 @@
 import { makeAutoObservable } from "mobx"
+
 import { moderatorsService } from 'API'
+import { moderatorStatusValidation } from 'settings/responseStatus'
+import { toastAddModerator, toastEditModerator, toastDeleteModerator } from 'settings/toastifyTools'
+import {log} from "util";
+
 export interface ISystem {
     moderators: Array<Object>;
     error: string;
@@ -39,20 +44,32 @@ class Moderators implements ISystem{
 
     async addModerator(login, password){
         const response = await moderatorsService.addModerator(login, password)
-        console.log(response)
-        await this.getModerators()
+        moderatorStatusValidation(response.status)
+        if(response.status === 200) {
+            await this.getModerators().then(() => {
+                toastAddModerator(login)
+            })
+        }
     }
+
 
     async editModerator(login, password){
         const response = await moderatorsService.editModerator(this.id, login, password)
-        console.log(response)
-        await this.getModerators()
+        if(response.status === 200) {
+            await this.getModerators().then(() => {
+                toastEditModerator(login)
+            })
+        }
     }
 
-    async deleteModerator(id){
+    async deleteModerator(id, login){
         const response = await moderatorsService.deleteModerator(id)
         console.log(response)
-        await this.getModerators()
+        if(response.status === 200) {
+            await this.getModerators().then(() => {
+                toastDeleteModerator(login)
+            })
+        }
     }
 
     setModerators(moderators){

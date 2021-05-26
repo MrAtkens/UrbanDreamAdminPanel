@@ -66,11 +66,13 @@ const BrigadesTable = observer(() => {
                         title="Таблица бригад"
                         columns={[
                             { title: 'ID', field: 'id', editable: 'never' },
-                            { title: 'Имя', field: "firstName"},
-                            { title: 'Фамилия', field: "lastName" },
-                            { title: 'Номер', field: "phoneNumber" },
-                            { title: 'Почта', field: "email" },
-                            { title: 'Дата добавление', field: "creationDate"},
+                            { title: 'Логин', field: 'login'},
+                            { title: 'Имя', field: 'firstName'},
+                            { title: 'Фамилия', field: 'lastName' },
+                            { title: 'Наз.Бригады', field: 'brigadeName' },
+                            { title: 'Кол.Рабочих', field: 'brigadeWorkAddress' },
+                            { title: 'Кол.Законченных Работ', field: 'brigadePinsCount'},
+                            { title: 'Дата добавление', field: 'creationDate'},
                         ]}
                         data={brigade.getBrigadesTable}
                         localization={tableLocalization}
@@ -103,7 +105,7 @@ const BrigadesTable = observer(() => {
                             onRowDelete: (oldData) =>
                                 new Promise((resolve, reject)  => {
                                     console.log(oldData)
-                                    brigade.deleteBrigade(oldData.id)
+                                    brigade.deleteBrigade(oldData.id, oldData.brigadeName)
                                 })
                         }}
                     />

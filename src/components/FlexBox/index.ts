@@ -21,3 +21,8 @@ export const Row = styled(Rows, () => ({
 export const Col = styled(Cols, () => ({
   padding: '0 15px',
 }));
+
+export const MapRow = styled(Rows, () => ({}));
+
+export const MapCol = styled(Cols, () => ({}));
+

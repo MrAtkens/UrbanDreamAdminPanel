@@ -1,5 +1,9 @@
 import {makeAutoObservable, runInAction} from "mobx";
+
 import { usersService } from 'API'
+import { userStatusValidation } from 'settings/responseStatus'
+import { toastEditUser, toastDeleteUser } from 'settings/toastifyTools'
+
 export interface ISystem {
     users: Array<Object>;
     userEdit: Object;
@@ -40,16 +44,25 @@ class Users implements ISystem{
     }
 
 
-    async editUser(firstName, lastName, password, phoneNumber, email){
-        const response = await usersService.editUser(this.id, firstName, lastName, password, phoneNumber, email)
-        console.log(response)
-        await this.getUsers()
+    async editUser(firstName, lastName, password, email){
+        const response = await usersService.editUser(this.id, firstName, lastName, password, email)
+        userStatusValidation(response.status)
+        if(response.status === 200) {
+            await this.getUsers().then(() => {
+                toastEditUser(firstName)
+            })
+        }
     }
 
-    async deleteUser(id){
+    async deleteUser(id, name){
         const response = await usersService.deleteUser(id)
-        console.log(response)
-        await this.getUsers()
+        userStatusValidation(response.status)
+        if(response.status === 200) {
+            this.id = id
+            await this.getUsers().then(() => {
+                toastDeleteUser(name)
+            })
+        }
     }
 
     defaultData(){

@@ -27,7 +27,7 @@ const addBrigade = async (firstName, lastName, brigadeName, brigadeWorkAddress, 
         firstName: firstName,
         lastName: lastName,
         login: login,
-        password: password,
+        passwordHash: password,
         brigadeName: brigadeName,
         brigadeWorkAddress: brigadeWorkAddress,
         brigadeWorkersCount: brigadeWorkersCount
