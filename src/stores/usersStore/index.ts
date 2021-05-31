@@ -7,7 +7,6 @@ import { toastEditUser, toastDeleteUser } from 'settings/toastifyTools'
 export interface ISystem {
     users: Array<Object>;
     userEdit: Object;
-    error: string;
     id: string;
 }
 
@@ -16,7 +15,6 @@ const defaultUserEdit = {firstName:"", lastName: "", email: "", phoneNumber: ""}
 class Users implements ISystem{
     users = [];
     userEdit = defaultUserEdit
-    error = "";
     id = "";
 
     constructor() {

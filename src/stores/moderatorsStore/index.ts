@@ -7,14 +7,12 @@ import {log} from "util";
 
 export interface ISystem {
     moderators: Array<Object>;
-    error: string;
     id: string;
 }
 
 
 class Moderators implements ISystem{
     moderators = [];
-    error = "";
     id = "";
 
     constructor() {

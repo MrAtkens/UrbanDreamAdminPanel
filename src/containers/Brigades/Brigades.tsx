@@ -48,10 +48,6 @@ const BrigadesTable = observer(() => {
         })
     }, [])
 
-    if (brigade.error) {
-        return <div>Error! {brigade.error}</div>;
-    }
-
     function openEdit(event, row){
         console.log(event)
         brigade.id = row.id;

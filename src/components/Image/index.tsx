@@ -6,16 +6,12 @@ export default function Image({
   key,
   url,
   alt,
-  unloader,
-  loader,
   className,
   style,
 }: {
   key?: any;
   url?: string | [string];
   alt?: string;
-  unloader?: string;
-  loader?: string;
   className?: string;
   style?: any;
 }) {

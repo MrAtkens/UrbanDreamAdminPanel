@@ -7,7 +7,6 @@ import { toastAddBrigade, toastEditBrigade, toastDeleteBrigade } from 'settings/
 export interface ISystem {
     brigades: Array<Object>;
     brigadeEdit: Object;
-    error: string;
     id: string;
 }
 
@@ -16,7 +15,6 @@ const defaultBrigadeEdit = {firstName:"", lastName: "", email: "", phoneNumber: 
 class Brigades implements ISystem{
     brigades = [];
     brigadeEdit = defaultBrigadeEdit
-    error = "";
     id = "";
 
     constructor() {

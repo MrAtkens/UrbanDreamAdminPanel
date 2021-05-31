@@ -1,69 +1,110 @@
 import {makeAutoObservable} from "mobx";
-import S3 from 'react-aws-s3';
 
 import { pinsService } from 'API'
 export interface ISystem {
-    pins: Array<Object>;
-    error: string;
-    id: string;
+    moderatingPins: Array<Object>;
+    acceptedPins: Array<Object>;
+    solvingPins: Array<Object>;
+    solvedPins: Array<Object>;
+    pinId: Object;
 }
-
-const config = {
-    bucketName: 'historyblogkazakhstan',
-    dirName: 'Images',
-    region: 'ap-northeast-2',
-    accessKeyId: 'AKIATOY4UOHNP4BVECPP',
-    secretAccessKey: '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',
-}
-
-const ReactS3Client = new S3(config);
 
 class Pins implements ISystem{
-    pins = [];
-    error = "";
-    id = "";
+    moderatingPins = [];
+    acceptedPins = [];
+    solvingPins = [];
+    solvedPins = [];
+    pinId = {
+        id: "",
+        title: "",
+        description: "",
+        userId: "",
+        acceptedModeratorId: "",
+        acceptedModeratorAnswer: "",
+        creationDate: "",
+        latitude: 0,
+        longitude: 0,
+        images: [],
+        tags: []
+    };
 
     constructor() {
         makeAutoObservable(this)
     }
 
-    async getPins(){
-        const response = await pinsService.getPinsApi()
+    async getAllPins(){
+        await this.getModeratingPins();
+        await this.getAcceptedPins();
+        await this.getSolvingPins();
+        await this.getSolvedPins();
+    }
+
+    async getModeratingPins(){
+        const response = await pinsService.getModeratingPinsApi();
         console.log(response)
-        this.setPins(response.data)
+        this.setModeratingPins(response.data);
+    }
+
+    async getAcceptedPins(){
+        const response = await pinsService.getAcceptedPinsApi();
+        console.log(response)
+        this.setAcceptedPins(response.data)
+    }
+
+    async getSolvingPins(){
+        const response = await pinsService.getSolvingPinsApi();
+        console.log(response)
+        this.setSolvingPins(response.data);
+    }
+
+    async getSolvedPins(){
+        const response = await pinsService.getSolvedPinsApi();
+        console.log(response)
+        this.setSolvedPins(response.data)
+    }
+
+    async getById(id){
+        const response = await pinsService.getPinByIdApi(id);
+        this.setPin(response.data)
+        console.log(this.pinId)
     }
 
     async acceptUserPin(state, answer){
-        const response = await pinsService.acceptUserPin(state, answer)
+        const response = await pinsService.acceptUserPin(this.pinId.id, answer, state)
         console.log(response)
-
+        if(response.status === 200){
+            await this.getAllPins();
+        }
     }
 
     async deletePin(id){
         const response = await pinsService.deletePinApi(id)
         console.log(response)
-        await this.getPins()
+        await this.getAllPins()
     }
 
-    get getPinById(){
-        let findPin = {name: "", description: "", urlImg: ""}
-        this.pins.map(category => {
-            if(category.id === this.id){
-                findPin = category
-                console.log(category)
-            }
-        })
-        console.log(findPin)
-        return findPin;
+    get getModeratingPinsTable(){
+        return this.moderatingPins;
     }
 
-
-    get getPinsTable(){
-        return this.pins;
+    setModeratingPins(pins){
+        this.moderatingPins = pins
     }
 
-    setPins(pins){
-        this.pins = pins
+    setAcceptedPins(pins){
+        this.acceptedPins = pins
+    }
+
+    setSolvingPins(pins){
+        this.solvingPins = pins
+    }
+
+    setSolvedPins(pins){
+        this.solvedPins = pins
+    }
+
+    setPin(pin){
+        this.pinId = pin
     }
 }
 

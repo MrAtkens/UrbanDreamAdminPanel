@@ -39,10 +39,6 @@ const CustomersTable = observer(() => {
         users.getUsers();
     },[])
 
-    if (users.error) {
-        return <div>Error! {users.error}</div>;
-    }
-
     function openEdit(event, row){
         console.log(row)
         users.id = row.id;

@@ -41,10 +41,6 @@ const ModeratorsTable = observer(() => {
         moderators.getModerators()
     }, [])
 
-    if (moderators.error) {
-        return <div>Error! {moderators.error}</div>;
-    }
-
     function openEdit(event, row){
         console.log(event)
         moderators.id = row.id;
